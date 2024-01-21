@@ -2,7 +2,7 @@ package org.example.model;
 
 import static org.example.Constants.STARTING_HAND_SIZE;
 
-public class Person extends Participant {
+public class Person implements Player {
 
     private final String playerName;
     private Hand playerHand = new Hand();
@@ -20,8 +20,6 @@ public class Person extends Participant {
         }
     }
 
-
-
     @Override
     public Hand getHand() {
         return playerHand;
@@ -38,11 +36,6 @@ public class Person extends Participant {
 
     public String getParticipantName() {
         return playerName;
-    }
-
-    @Override
-    public String hitOrStay(Hand dealerHand) {
-        return null;
     }
 
     @Override

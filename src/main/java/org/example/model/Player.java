@@ -1,16 +1,14 @@
 package org.example.model;
 
-public abstract class Participant {
+public abstract interface Player {
 
-    private String name;
+//    private String name;
+//
+//    private Hand hand;
+//
+//    private int balance;
 
-    private Hand hand;
-
-    private int balance;
-
-    void addToParticipantBalance(int amount) {
-
-    }
+    void addToParticipantBalance(int amount);
 
     Hand getHand();
 
@@ -19,8 +17,6 @@ public abstract class Participant {
     int getParticipantBalance();
 
     String getParticipantName();
-
-    String hitOrStay(Hand dealerHand);
 
     boolean isBot();
 

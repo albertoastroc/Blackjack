@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import static org.example.Constants.STARTING_HAND_SIZE;
 
 @Component
-public class OpenAIBot extends Participant {
+public class OpenAIBot implements Player {
 
     private final AIService openAIDao;
 
@@ -45,7 +45,6 @@ public class OpenAIBot extends Participant {
         return botName;
     }
 
-    @Override
     public String hitOrStay(Hand dealerHand) {
 
         return openAIDao.askHitOrStay(botHand, dealerHand);

@@ -12,14 +12,14 @@ public class Game {
     private final Scanner scanner;
     private final Dealer dealer = new Dealer();
     private final Deck deck = new Deck();
-    private Set<Participant> setOfParticipants = new HashSet<>();
+    private Set<Player> setOfPlayers = new HashSet<>();
     private Map<String, Integer> betsMap = new HashMap<>();
 
     //Used for payout and compare hands
-    Set<Participant> setOfPlayersNotBust = new HashSet<>();
+    Set<Player> setOfPlayersNotBust = new HashSet<>();
 
     //Used to remove bets from their balances
-    Set<Participant> setOfPlayersBust = new HashSet<>();
+    Set<Player> setOfPlayersBust = new HashSet<>();
     private final OpenAiService openAiService = new OpenAiService();
 
     private boolean useBots = true;
@@ -32,26 +32,26 @@ public class Game {
 
     public void addBots() {
 
-        while (setOfParticipants.size() < 5) {
+        while (setOfPlayers.size() < 5) {
 
             OpenAIBot bot = new OpenAIBot(openAiService);
 
-            setOfParticipants.add(bot);
+            setOfPlayers.add(bot);
 
         }
     }
 
     public void addPlayerFunds(String playerName) {
 
-        //Filters for Participant that has the matching name
-        if (setOfParticipants.contains(new Person(playerName))) {
+        //Filters for Player that has the matching name
+        if (setOfPlayers.contains(new Person(playerName))) {
 
             while (true) {
                 try {
                     System.out.println("How much should be added?");
                     String amount = scanner.nextLine();
 
-                    Participant person = setOfParticipants.stream().filter(p -> p.getParticipantName().equals(playerName))
+                    Player person = setOfPlayers.stream().filter(p -> p.getParticipantName().equals(playerName))
                             .collect(Collectors.toList()).get(0);
                     person.addToParticipantBalance(Integer.parseInt(amount));
 
@@ -75,14 +75,14 @@ public class Game {
         String[] playerNames = inputPlayers.split(",");
 
         for (String playerName : playerNames) {
-            //Participant names must be unique
-            Participant newPerson = new Person(playerName.trim());
+            //Player names must be unique
+            Player newPerson = new Person(playerName.trim());
 
             if (!newPerson.getParticipantName().isBlank()) {
 
-                boolean added = setOfParticipants.add(newPerson);
+                boolean added = setOfPlayers.add(newPerson);
                 if (!added) {
-                    System.out.println("Participant with the name " + playerName.trim() + " already exists");
+                    System.out.println("Player with the name " + playerName.trim() + " already exists");
                 }
             }
         }
@@ -109,7 +109,7 @@ public class Game {
             System.out.println("Dealer score " + dealer.getHandScore());
             System.out.println();
 
-            for (Participant person : setOfPlayersNotBust) {
+            for (Player person : setOfPlayersNotBust) {
                 //If dealer busted everyone still in it gets paid
                 if (dealer.getHandScore() > HIGHEST_POSSIBLE_SCORE) {
                     payoutWhenDealerBusts(person);
@@ -163,7 +163,7 @@ public class Game {
         //Ask the player if they want to keep hitting unless they have 21
         runPlayerPhase();
 
-        //Participant choice is over, reveal dealer hidden card
+        //Player choice is over, reveal dealer hidden card
         runDealerPhase();
 
         printHands();
@@ -182,7 +182,7 @@ public class Game {
 
     public void printPlayersAndBalances() {
 
-        for (Participant person : setOfParticipants) {
+        for (Player person : setOfPlayers) {
 
             System.out.print(person.getParticipantName() + "'s balance is : ");
             System.out.println(person.getParticipantBalance());
@@ -196,7 +196,7 @@ public class Game {
 
         for (String playerName : playerNames) {
 
-            setOfParticipants = setOfParticipants.stream()
+            setOfPlayers = setOfPlayers.stream()
                     .filter(person -> !person.getParticipantName().equals(playerName.trim())).collect(Collectors.toSet());
 
         }
@@ -205,7 +205,7 @@ public class Game {
     /**
      * @return -1 for loss, 0 for tie, 1 for win
      */
-    private int compareHandsGetResult(Participant person, Dealer dealer) {
+    private int compareHandsGetResult(Player person, Dealer dealer) {
 
         return person.getHand().compareTo(dealer.getHand());
 
@@ -215,10 +215,10 @@ public class Game {
 
         dealer.setUpStartingHand(deck);
 
-        for (Participant person : setOfParticipants) {
+        for (Player person : setOfPlayers) {
 
             if (person.getParticipantBalance() == 0) {
-                setOfParticipants.remove(person);
+                setOfPlayers.remove(person);
 
             } else {
                 person.setUpStartingHand(deck);
@@ -229,7 +229,7 @@ public class Game {
 
     private void getBets() {
 
-        for (Participant currentPerson : setOfParticipants) {
+        for (Player currentPerson : setOfPlayers) {
 
             if (currentPerson.isBot()) {
 
@@ -267,7 +267,7 @@ public class Game {
         }
     }
 
-    private void payoutWhenDealerBusts(Participant person) {
+    private void payoutWhenDealerBusts(Player person) {
         //Checks if a person got blackjack, so they can get paid 1.5
         if (person.getHand().getHandSize() == 2
                 && person.getHand().getHandScore() == HIGHEST_POSSIBLE_SCORE) {
@@ -288,7 +288,7 @@ public class Game {
         }
     }
 
-    private void payoutWhenDealerNotBustAtLeastOnePlayerNotBust(Participant person) {
+    private void payoutWhenDealerNotBustAtLeastOnePlayerNotBust(Player person) {
 
         int result = compareHandsGetResult(person, dealer);
 
@@ -334,7 +334,7 @@ public class Game {
         System.out.println("********* Hands *********");
         System.out.println();
 
-        for (Participant currentPerson : setOfParticipants) {
+        for (Player currentPerson : setOfPlayers) {
             System.out.println(currentPerson.getParticipantName() + "'s hand");
             System.out.println(currentPerson.getHand());
             System.out.println("Hand score " + currentPerson.getHandScore());
@@ -372,9 +372,9 @@ public class Game {
 
     }
 
-    private void removeFromBustedPlayersBalance(Set<Participant> setOfPlayersThatBusted) {
+    private void removeFromBustedPlayersBalance(Set<Player> setOfPlayersThatBusted) {
         //Take bet from players that busted
-        for (Participant person : setOfPlayersThatBusted) {
+        for (Player person : setOfPlayersThatBusted) {
             System.out.println(
                     person.getParticipantName() + " busted with " + person.getHandScore() + " -" + betsMap.get(person.getParticipantName()));
             person.subtractFromParticipantBalance(betsMap.get(person.getParticipantName()));
@@ -395,11 +395,11 @@ public class Game {
 
     private void runPlayerPhase() {
 
-        for (Participant currentPerson : setOfParticipants) {
+        for (Player currentPerson : setOfPlayers) {
 
-            if (currentPerson.isBot()) {
+            if (currentPerson instanceof OpenAIBot) {
 
-                String botDecision = currentPerson.hitOrStay(dealer.getHand());
+                String botDecision = ((OpenAIBot) currentPerson).hitOrStay(dealer.getHand());
 
                 while (botDecision.equals("h")) {
 
@@ -412,7 +412,7 @@ public class Game {
 
                     } else {
 
-                        botDecision = currentPerson.hitOrStay(dealer.getHand());
+                        botDecision = ((OpenAIBot) currentPerson).hitOrStay(dealer.getHand());
 
                     }
 
