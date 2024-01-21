@@ -6,6 +6,7 @@ public class OpenAIRequest {
 
     public String model;
     public ArrayList<Message> messages = new ArrayList<>();
+
     public void addMessage(Message message) {
         this.messages.add(message);
 

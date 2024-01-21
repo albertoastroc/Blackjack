@@ -5,13 +5,10 @@ import org.example.model.Hand;
 import org.example.openai.Message;
 import org.example.openai.OpenAIRequest;
 import org.example.openai.OpenAIResponse;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.ConfigurableWebEnvironment;
-import retrofit2.Response;
 
 public class OpenAiService implements AIService {
 
@@ -19,6 +16,39 @@ public class OpenAiService implements AIService {
     private static final String apiKey = System.getenv("OPENAI_API_KEY");
     private static final String model = "gpt-3.5-turbo";
     RestTemplate restTemplate = new RestTemplate();
+
+    @Override
+    public int getBetAmount(int chipBalance) {
+
+        String message = "Answer only with a whole number greater than 200, rounded to the nearest hundreds place only, do not answer in any other way, do not explain why you made your decision or give advice." +
+                "If you are playing blackjack and your chip balance is " + chipBalance + "using any strategy you want how much would you bet? again do not answer with anything but what was asked";
+
+        HttpHeaders headers = createHeaders();
+        HttpEntity<OpenAIRequest> entity = getOpenAIRequestHttpEntity(message, headers);
+
+        try {
+
+            ResponseEntity<OpenAIResponse> response = restTemplate.exchange(API_BASE_URL, HttpMethod.POST, entity, OpenAIResponse.class);
+            if (response.getBody() != null) {
+                return Integer.parseInt(response.getBody().choices.get(0).message.content);
+            }
+        } catch (ResourceAccessException e) {
+            // This means there is some sort of network error
+            System.out.println(e.getMessage());
+        } catch (RestClientResponseException e) {
+            if (e.getRawStatusCode() >= 500) {
+                // Server can't handle the result (database fills up, server can't handle our message format)
+                System.out.println("Server Error");
+            } else if (e.getRawStatusCode() >= 400) {
+                // Probably something wrong with our URL
+                System.out.println("Client Error");
+                System.out.println(e.getRawStatusCode());
+                System.out.println(e.getMessage());
+            }
+        }
+        return 0;
+
+    }
 
     @Override
     public String askDoubleUp() {
@@ -38,7 +68,7 @@ public class OpenAiService implements AIService {
         try {
 
             ResponseEntity<OpenAIResponse> response = restTemplate.exchange(API_BASE_URL, HttpMethod.POST, entity, OpenAIResponse.class);
-            if (response.getBody() != null){
+            if (response.getBody() != null) {
                 return response.getBody().choices.get(0).message.content;
             }
         } catch (ResourceAccessException e) {

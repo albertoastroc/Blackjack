@@ -6,10 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="c27cae21-0adb-4ed6-94f5-75e6cf8a11ce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GameCLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GameCLI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/OpenAiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/OpenAiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/AIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/AIService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Hand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/OpenAIBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/OpenAIBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Participant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Participant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/openai/OpenAIRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/openai/OpenAIRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DealerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DealerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/HandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/HandTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

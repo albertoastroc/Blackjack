@@ -1,75 +1,35 @@
 package org.example.model;
 
+import org.example.OpenAiService;
 import org.example.dao.AIService;
 import org.springframework.stereotype.Component;
 
-import static org.example.Constants.STARTING_HAND_SIZE;
+import java.util.Random;
 
 @Component
-public class OpenAIBot implements Player {
+public class OpenAIBot extends Player {
 
     private final AIService openAIDao;
 
-    public OpenAIBot(AIService openAIDao) {
+    Random random = new Random();
+
+    public OpenAIBot(OpenAiService openAIDao) {
+
+
+
+        this.setName("Bot " + random.nextInt(100));
         this.openAIDao = openAIDao;
     }
 
-    private final String botName = "Oddie";
+    public int getBetAmount() {
 
-    private Hand botHand;
+        return openAIDao.getBetAmount(getBalance());
 
-    private int botBalance = 5000;
-
-    @Override
-    public void addToParticipantBalance(int amount) {
-        botBalance += amount;
-    }
-
-    @Override
-    public Hand getHand() {
-        return botHand;
-    }
-
-    @Override
-    public int getHandScore() {
-        return botHand.getHandScore();
-    }
-
-    @Override
-    public int getParticipantBalance() {
-        return botBalance;
-    }
-
-    @Override
-    public String getParticipantName() {
-        return botName;
     }
 
     public String hitOrStay(Hand dealerHand) {
 
-        return openAIDao.askHitOrStay(botHand, dealerHand);
+        return openAIDao.askHitOrStay(getHand(), dealerHand);
 
-    }
-    @Override
-    public boolean isBot() {
-        return true;
-    }
-
-    @Override
-    public void setUpStartingHand(Deck deck) {
-
-        botHand = new Hand();
-
-        for (int j = 0; j < STARTING_HAND_SIZE; j++) {
-
-            botHand.addCardToHand(deck.getRandomCard());
-
-        }
-
-    }
-
-    @Override
-    public void subtractFromParticipantBalance(int amount) {
-        botBalance -= amount;
     }
 }

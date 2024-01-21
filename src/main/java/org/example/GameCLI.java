@@ -1,6 +1,5 @@
 package org.example;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class GameCLI {
@@ -20,7 +19,7 @@ public class GameCLI {
 
         String userInput = "2";
 
-        while (! userInput.equals("7")) {
+        while (!userInput.equals("7")) {
 
             if (userInput.length() != 1) {
 

@@ -56,7 +56,7 @@ public class Hand implements Comparable<Hand> {
                 && this.getHandScore() == HIGHEST_POSSIBLE_SCORE
                 && hand.getHandScore() == HIGHEST_POSSIBLE_SCORE
         ) {
-            return - 1;
+            return -1;
 
         }
 
@@ -66,7 +66,7 @@ public class Hand implements Comparable<Hand> {
 
         }
 
-        return - 1;
+        return -1;
 
     }
 

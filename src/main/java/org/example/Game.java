@@ -12,16 +12,13 @@ public class Game {
     private final Scanner scanner;
     private final Dealer dealer = new Dealer();
     private final Deck deck = new Deck();
-    private Set<Player> setOfPlayers = new HashSet<>();
-    private Map<String, Integer> betsMap = new HashMap<>();
-
+    private final OpenAiService openAiService = new OpenAiService();
     //Used for payout and compare hands
     Set<Player> setOfPlayersNotBust = new HashSet<>();
-
     //Used to remove bets from their balances
     Set<Player> setOfPlayersBust = new HashSet<>();
-    private final OpenAiService openAiService = new OpenAiService();
-
+    private Set<Player> setOfPlayers = new HashSet<>();
+    private Map<String, Integer> betsMap = new HashMap<>();
     private boolean useBots = true;
 
 
@@ -51,9 +48,9 @@ public class Game {
                     System.out.println("How much should be added?");
                     String amount = scanner.nextLine();
 
-                    Player person = setOfPlayers.stream().filter(p -> p.getParticipantName().equals(playerName))
+                    Player person = setOfPlayers.stream().filter(p -> p.getName().equals(playerName))
                             .collect(Collectors.toList()).get(0);
-                    person.addToParticipantBalance(Integer.parseInt(amount));
+                    person.addToBalance(Integer.parseInt(amount));
 
                     break;
 
@@ -78,7 +75,7 @@ public class Game {
             //Player names must be unique
             Player newPerson = new Person(playerName.trim());
 
-            if (!newPerson.getParticipantName().isBlank()) {
+            if (!newPerson.getName().isBlank()) {
 
                 boolean added = setOfPlayers.add(newPerson);
                 if (!added) {
@@ -127,16 +124,6 @@ public class Game {
 
     }
 
-    public void toggleBots() {
-
-        String userChoice = scanner.nextLine();
-        if (useBots) {
-            System.out.println("Bots are turned on");
-        } else System.out.println("Bots are turned off");
-
-        useBots = userChoice.equalsIgnoreCase("y");
-    }
-
     public void playRound() {
 
         //reset lists for new round
@@ -161,7 +148,7 @@ public class Game {
         dealStartingHands();
 
         //Ask the player if they want to keep hitting unless they have 21
-        runPlayerPhase();
+        runPlayPhase();
 
         //Player choice is over, reveal dealer hidden card
         runDealerPhase();
@@ -184,8 +171,8 @@ public class Game {
 
         for (Player person : setOfPlayers) {
 
-            System.out.print(person.getParticipantName() + "'s balance is : ");
-            System.out.println(person.getParticipantBalance());
+            System.out.print(person.getName() + "'s balance is : ");
+            System.out.println(person.getBalance());
 
         }
     }
@@ -197,9 +184,20 @@ public class Game {
         for (String playerName : playerNames) {
 
             setOfPlayers = setOfPlayers.stream()
-                    .filter(person -> !person.getParticipantName().equals(playerName.trim())).collect(Collectors.toSet());
+                    .filter(person -> !person.getName().equals(playerName.trim())).collect(Collectors.toSet());
 
         }
+    }
+
+    public void toggleBots() {
+
+        String userChoice = scanner.nextLine();
+        useBots = userChoice.equalsIgnoreCase("y");
+        if (useBots) {
+            System.out.println("Bots are turned on");
+        } else System.out.println("Bots are turned off");
+
+
     }
 
     /**
@@ -216,14 +214,8 @@ public class Game {
         dealer.setUpStartingHand(deck);
 
         for (Player person : setOfPlayers) {
+            person.setUpStartingHand(deck);
 
-            if (person.getParticipantBalance() == 0) {
-                setOfPlayers.remove(person);
-
-            } else {
-                person.setUpStartingHand(deck);
-
-            }
         }
     }
 
@@ -231,13 +223,14 @@ public class Game {
 
         for (Player currentPerson : setOfPlayers) {
 
-            if (currentPerson.isBot()) {
+            if (currentPerson instanceof OpenAIBot) {
 
+                int betAmount = ((OpenAIBot) currentPerson).getBetAmount();
+                betsMap.put(currentPerson.getName(), betAmount);
 
+            } else {
 
-            }
-
-            int playerBalance = currentPerson.getParticipantBalance();
+            int playerBalance = currentPerson.getBalance();
 
             while (true) {
 
@@ -247,13 +240,13 @@ public class Game {
 
                     while (betAmount < 200) {
 
-                        System.out.println(currentPerson.getParticipantName() + " you have " + currentPerson.getParticipantBalance()
+                        System.out.println(currentPerson.getName() + " you have " + currentPerson.getBalance()
                                 + " chips how many chips will you bet? (200 minimum)");
                         betAmount = Integer.parseInt(scanner.nextLine());
                     }
 
                     if (betAmount <= playerBalance) {
-                        betsMap.put(currentPerson.getParticipantName(), betAmount);
+                        betsMap.put(currentPerson.getName(), betAmount);
                         System.out.println("Bet is placed");
                     }
 
@@ -264,6 +257,7 @@ public class Game {
 
                 }
             }
+            }
         }
     }
 
@@ -273,17 +267,17 @@ public class Game {
                 && person.getHand().getHandScore() == HIGHEST_POSSIBLE_SCORE) {
 
             System.out.println(
-                    person.getParticipantName() + " wins with Blackjack! +" + (int) (betsMap.get(person.getParticipantName()) * 1.5));
-            person.addToParticipantBalance(
-                    (int) (betsMap.get(person.getParticipantName()) * 1.5));
+                    person.getName() + " wins with Blackjack! +" + (int) (betsMap.get(person.getName()) * 1.5));
+            person.addToBalance(
+                    (int) (betsMap.get(person.getName()) * 1.5));
 
             //Pay 1 to 1 to players that didn't bust
         } else {
 
-            System.out.println("Dealer busts " + person.getParticipantName() + " wins!" + " +" + betsMap.get(
-                    person.getParticipantName()));
+            System.out.println("Dealer busts " + person.getName() + " wins!" + " +" + betsMap.get(
+                    person.getName()));
 
-            person.addToParticipantBalance(betsMap.get(person.getParticipantName()));
+            person.addToBalance(betsMap.get(person.getName()));
 
         }
     }
@@ -296,35 +290,35 @@ public class Game {
 
         if (result == -1 && dealer.getHand().getHandScore() == HIGHEST_POSSIBLE_SCORE && dealer.getHand().getHandSize() == 2) {
             System.out.println(
-                    person.getParticipantName() + " loses with " + person.getHandScore() + " against dealer Blackjack -" + betsMap.get(
-                            person.getParticipantName()));
-            person.subtractFromParticipantBalance(betsMap.get(person.getParticipantName()));
+                    person.getName() + " loses with " + person.getHandScore() + " against dealer Blackjack -" + betsMap.get(
+                            person.getName()));
+            person.subtractFromBalance(betsMap.get(person.getName()));
 
         } else if (result == -1) {
             System.out.println(
-                    person.getParticipantName() + " loses with " + person.getHandScore() + " -" + betsMap.get(
-                            person.getParticipantName()));
-            person.subtractFromParticipantBalance(betsMap.get(person.getParticipantName()));
+                    person.getName() + " loses with " + person.getHandScore() + " -" + betsMap.get(
+                            person.getName()));
+            person.subtractFromBalance(betsMap.get(person.getName()));
 
         } else if (result == 0) {
             System.out.println(
-                    person.getParticipantName() + " ties with " + person.getHandScore());
+                    person.getName() + " ties with " + person.getHandScore());
 
             //Check if person wins with Blackjack
         } else if (result == 1 && person.getHand().getHandSize() == 2
                 && person.getHand().getHandScore() == HIGHEST_POSSIBLE_SCORE) {
 
             System.out.println(
-                    person.getParticipantName() + " wins with Blackjack! +" + (int) (betsMap.get(person.getParticipantName()) * 1.5));
-            person.addToParticipantBalance(
-                    (int) (betsMap.get(person.getParticipantName()) * 1.5));
+                    person.getName() + " wins with Blackjack! +" + (int) (betsMap.get(person.getName()) * 1.5));
+            person.addToBalance(
+                    (int) (betsMap.get(person.getName()) * 1.5));
 
         } else if (result == 1) {
 
             System.out.println(
-                    person.getParticipantName() + " wins with " + person.getHandScore() + " +" + betsMap.get(
-                            person.getParticipantName()));
-            person.addToParticipantBalance(betsMap.get(person.getParticipantName()));
+                    person.getName() + " wins with " + person.getHandScore() + " +" + betsMap.get(
+                            person.getName()));
+            person.addToBalance(betsMap.get(person.getName()));
 
         }
     }
@@ -335,12 +329,12 @@ public class Game {
         System.out.println();
 
         for (Player currentPerson : setOfPlayers) {
-            System.out.println(currentPerson.getParticipantName() + "'s hand");
+            System.out.println(currentPerson.getName() + "'s hand");
             System.out.println(currentPerson.getHand());
             System.out.println("Hand score " + currentPerson.getHandScore());
 
             if (currentPerson.getHandScore() > HIGHEST_POSSIBLE_SCORE) {
-                System.out.println(currentPerson.getParticipantName() + " busts!");
+                System.out.println(currentPerson.getName() + " busts!");
 
             }
 
@@ -376,8 +370,12 @@ public class Game {
         //Take bet from players that busted
         for (Player person : setOfPlayersThatBusted) {
             System.out.println(
-                    person.getParticipantName() + " busted with " + person.getHandScore() + " -" + betsMap.get(person.getParticipantName()));
-            person.subtractFromParticipantBalance(betsMap.get(person.getParticipantName()));
+                    person.getName() + " busted with " + person.getHandScore() + " -" + betsMap.get(person.getName()));
+            person.subtractFromBalance(betsMap.get(person.getName()));
+
+            if (person.getBalance() == 0) {
+                setOfPlayers.remove(person);
+            }
 
         }
     }
@@ -393,7 +391,7 @@ public class Game {
         }
     }
 
-    private void runPlayerPhase() {
+    private void runPlayPhase() {
 
         for (Player currentPerson : setOfPlayers) {
 
@@ -426,7 +424,7 @@ public class Game {
                     printHands();
 
                     System.out.println(
-                            currentPerson.getParticipantName() + " you have " + currentPerson.getHandScore()
+                            currentPerson.getName() + " you have " + currentPerson.getHandScore()
                                     + " hit or stay? (h/s)");
                     String hitAnswer = scanner.nextLine().toLowerCase();
 
