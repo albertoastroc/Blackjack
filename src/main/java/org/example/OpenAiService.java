@@ -21,19 +21,12 @@ public class OpenAiService implements AIService {
     RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public String askBetAmount() {
-        return null;
-    }
-
-    @Override
     public String askDoubleUp() {
         return null;
     }
 
     @Override
     public String askHitOrStay(Hand botHand, Hand dealerHand) {
-
-        System.out.println(apiKey);
 
         String message = "Answer 'h' for hit or 's' for stay, do not answer in any other way, do not explain why you made your decision or give advice." +
                 "If you are playing blackjack and your hand is made up of " + botHand.getCardsInHand().toString() + " and your hand score is " + botHand.getHandScore() + " and the dealer's up card is " + dealerHand.getCardsInHand().get(0)

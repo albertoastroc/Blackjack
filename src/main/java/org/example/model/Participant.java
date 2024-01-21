@@ -1,8 +1,16 @@
 package org.example.model;
 
-public interface Participant {
+public abstract class Participant {
 
-    void addToParticipantBalance(int amount);
+    private String name;
+
+    private Hand hand;
+
+    private int balance;
+
+    void addToParticipantBalance(int amount) {
+
+    }
 
     Hand getHand();
 
@@ -19,4 +27,5 @@ public interface Participant {
     void setUpStartingHand(Deck deck);
 
     void subtractFromParticipantBalance(int amount);
+
 }

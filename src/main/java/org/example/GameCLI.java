@@ -1,5 +1,6 @@
 package org.example;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class GameCLI {
@@ -19,7 +20,7 @@ public class GameCLI {
 
         String userInput = "2";
 
-        while (! userInput.equals("6")) {
+        while (! userInput.equals("7")) {
 
             if (userInput.length() != 1) {
 
@@ -79,6 +80,16 @@ public class GameCLI {
 
             }
 
+            if (userInput.equals("6")) {
+
+                System.out.println("Use bots? y/n");
+
+                game.toggleBots();
+                printMainMenu();
+                userInput = scanner.nextLine();
+
+            }
+
         }
     }
 
@@ -90,7 +101,8 @@ public class GameCLI {
         System.out.println("3. Remove players");
         System.out.println("4. Show current players and balances");
         System.out.println("5. Add to player balance");
-        System.out.println("6. Quit");
+        System.out.println("6. Toggle bots");
+        System.out.println("7. Quit");
 
     }
 
