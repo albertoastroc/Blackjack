@@ -3,8 +3,7 @@ package org.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.Constants.HIGHEST_POSSIBLE_SCORE;
-import static org.example.Constants.MIN_BUST_VALUE;
+import static org.example.Constants.*;
 
 /**
  * A Hand is made up of Card objects that add up to a Hand score
@@ -14,96 +13,70 @@ public class Hand implements Comparable<Hand> {
     private final List<Card> cardsInHand = new ArrayList<>();
     private int handScore;
 
-    public Hand() {
-    }
+    public Hand() {}
 
     /**
      * Adds a card and it's score to the hand
-     *
      * @param card card being added
      */
     public void addCardToHand(Card card) {
+
         cardsInHand.add(card);
         handScore += card.getCardScore();
-    }
 
-    @Override
-    public int compareTo(Hand hand) {
-
-        //Higher score wins
-        if (this.getHandScore() > hand.getHandScore()) {
-            return 1;
-
-        }
-
-        //Person wins if they have blackjack and dealer has 21 with 3 or more cards
-        if (this.cardsInHand.size() == 2 && hand.cardsInHand.size() > 2
-                && this.getHandScore() == HIGHEST_POSSIBLE_SCORE
-                && hand.getHandScore() >= HIGHEST_POSSIBLE_SCORE
-        ) {
-            return 1;
-
-        }
-
-        //Tie if player and dealer have blackjack
-        if (this.getHandScore() == hand.getHandScore() && this.cardsInHand.size() == hand.cardsInHand.size()) {
-            return 0;
-
-        }
-
-        //Dealer wins if they have blackjack and player has 21 with 3 or more cards
-        if (this.cardsInHand.size() > 2 && hand.cardsInHand.size() == 2
-                && this.getHandScore() == HIGHEST_POSSIBLE_SCORE
-                && hand.getHandScore() == HIGHEST_POSSIBLE_SCORE
-        ) {
-            return -1;
-
-        }
-
-        //Tie if score is the same no blackjacks involved
-        if (this.getHandScore() == hand.getHandScore()) {
-            return 0;
-
-        }
-
-        return -1;
-
-    }
-
-    public List<Card> getCardsInHand() {
-        return cardsInHand;
     }
 
     /**
-     * @return Hand score based on total score of cards in hand, adjusts for highest score that won't bust if hand has one
-     * Ace
+     *
+     * @param dealerHand the object to be compared.
+     * @return 1 if the player's hand wins, -1 if the player's hand loses, 0 if the hands tie
+     * This function assumes that both hands are eligible hands for scoring (not busted)
+     * If hand score goes beyond 21 it should not be eligible for comparison
+     */
+    @Override
+    public int compareTo(Hand dealerHand) {
+
+        int playerScore = this.getHandScore();
+        int dealerScore = dealerHand.getHandScore();
+        int playerCardCount = this.cardsInHand.size();
+        int dealerCardCount = dealerHand.cardsInHand.size();
+
+        boolean playerNaturalBlackjack = playerScore == HIGHEST_POSSIBLE_SCORE && playerCardCount == STARTING_HAND_SIZE;
+        boolean dealerNaturalBlackjack = dealerScore == HIGHEST_POSSIBLE_SCORE && dealerCardCount == STARTING_HAND_SIZE;
+
+        if (playerNaturalBlackjack && !dealerNaturalBlackjack) {
+            return 1;
+        } else if (!playerNaturalBlackjack && dealerNaturalBlackjack){
+            return -1;
+        } else {
+            if (playerScore > dealerScore) {
+                return 1;
+            } else if (playerScore < dealerScore) {
+                return- 1;
+            } else{
+                return 0;
+            }
+        }
+    }
+
+    /**
+     * @return Hand score based on total score of cards in hand, adjusts for highest score that won't bust if hand has one or more Aces
      */
     public int getHandScore() {
 
         int numberOfAces = getNumberOfAces();
-
         int score = handScore;
 
         if (numberOfAces > 0) {
-
-            //Check if hand with ace value 11 would bust
             int handScoreWithBigAce = handScore + 10;
 
             if (handScoreWithBigAce < MIN_BUST_VALUE) {
-
                 score = handScoreWithBigAce;
 
             }
         }
 
         return score;
-    }
-
-    /**
-     * @return Size of hand Used to decide winner if both players have natural 21s
-     */
-    public int getHandSize() {
-        return cardsInHand.size();
     }
 
     /**
@@ -118,9 +91,22 @@ public class Hand implements Comparable<Hand> {
 
     }
 
-    @Override
-    public String toString() {
-        return cardsInHand.toString();
+    public int getHandSize() {
+
+        return cardsInHand.size();
+
     }
 
+    public List<Card> getCardsInHand() {
+
+        return cardsInHand;
+
+    }
+
+    @Override
+    public String toString() {
+
+        return cardsInHand.toString();
+
+    }
 }

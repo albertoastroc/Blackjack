@@ -6,18 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c27cae21-0adb-4ed6-94f5-75e6cf8a11ce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/GameCLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/GameCLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/OpenAiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/OpenAiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/AIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/AIService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Hand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/OpenAIBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/OpenAIBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/openai/OpenAIRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/openai/OpenAIRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DealerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DealerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DeckTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/HandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/HandTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,32 +39,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in Blackjack.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerTest.get_correct_hand_after_revealing.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerTest.get_correct_hand_before_revealing.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerTest.starting_hand_contains_one_card.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DeckTest.six_deck_count_has_three_hundred_and_twelve_cards.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameTest.test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.HandTest.dealer_beats_player_with_blackjack_player_twenty_one.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.HandTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.HandTest.player_beats_dealer_with_blackjack_dealer_twenty_one.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;openaiservice&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;A:/Albear/Documents/JavaProjects/Blackjack/.env&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.All in Blackjack.executor": "Run",
+    "JUnit.DealerTest.executor": "Run",
+    "JUnit.DealerTest.get_correct_hand_after_revealing.executor": "Run",
+    "JUnit.DealerTest.get_correct_hand_before_revealing.executor": "Run",
+    "JUnit.DealerTest.starting_hand_contains_one_card.executor": "Run",
+    "JUnit.DeckTest.six_deck_count_has_three_hundred_and_twelve_cards.executor": "Run",
+    "JUnit.GameTest.test.executor": "Run",
+    "JUnit.HandTest.dealer_beats_player_with_blackjack_player_twenty_one.executor": "Run",
+    "JUnit.HandTest.executor": "Run",
+    "JUnit.HandTest.player_and_dealer_tie_with_both_having_natural_twenty_one.executor": "Run",
+    "JUnit.HandTest.player_and_dealer_tie_with_non_natural_twenty_one.executor": "Run",
+    "JUnit.HandTest.player_beats_dealer_with_blackjack_dealer_twenty_one.executor": "Run",
+    "JUnit.java in Blackjack.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "openaiservice",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "A:/Albear/Documents/JavaProjects/Blackjack/.env",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
-}</component>
-  <component name="RunManager" selected="Application.Main">
+}]]></component>
+  <component name="RunManager" selected="JUnit.java in Blackjack">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
       <module name="Blackjack" />
@@ -99,34 +92,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in Blackjack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Blackjack" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DealerTest.starting_hand_contains_one_card" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Blackjack" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DealerTest" />
-      <option name="METHOD_NAME" value="starting_hand_contains_one_card" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DeckTest.six_deck_count_has_three_hundred_and_twelve_cards" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Blackjack" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DeckTest" />
-      <option name="METHOD_NAME" value="six_deck_count_has_three_hundred_and_twelve_cards" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GameTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Blackjack" />
       <option name="PACKAGE_NAME" value="" />
@@ -137,20 +102,48 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HandTest.player_and_dealer_tie_with_both_having_natural_twenty_one" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Blackjack" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="HandTest" />
+      <option name="METHOD_NAME" value="player_and_dealer_tie_with_both_having_natural_twenty_one" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HandTest.player_and_dealer_tie_with_non_natural_twenty_one" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Blackjack" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="HandTest" />
+      <option name="METHOD_NAME" value="player_and_dealer_tie_with_non_natural_twenty_one" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in Blackjack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Blackjack" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.All in Blackjack" />
-      <item itemvalue="JUnit.DealerTest.starting_hand_contains_one_card" />
-      <item itemvalue="JUnit.DeckTest.six_deck_count_has_three_hundred_and_twelve_cards" />
+      <item itemvalue="JUnit.HandTest.player_and_dealer_tie_with_both_having_natural_twenty_one" />
+      <item itemvalue="JUnit.HandTest.player_and_dealer_tie_with_non_natural_twenty_one" />
+      <item itemvalue="JUnit.java in Blackjack" />
       <item itemvalue="JUnit.GameTest.test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.java in Blackjack" />
+        <item itemvalue="JUnit.HandTest.player_and_dealer_tie_with_both_having_natural_twenty_one" />
+        <item itemvalue="JUnit.HandTest.player_and_dealer_tie_with_non_natural_twenty_one" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.GameTest.test" />
-        <item itemvalue="JUnit.DeckTest.six_deck_count_has_three_hundred_and_twelve_cards" />
-        <item itemvalue="JUnit.DealerTest.starting_hand_contains_one_card" />
-        <item itemvalue="JUnit.All in Blackjack" />
       </list>
     </recent_temporary>
   </component>
