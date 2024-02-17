@@ -29,6 +29,26 @@ public class Hand implements Comparable<Hand> {
     }
 
     /**
+     * @return Hand score based on total score of cards in hand, adjusts for highest score that won't bust if hand has one or more Aces
+     */
+    public int getHandScore() {
+
+        int numberOfAces = getNumberOfAces();
+        int score = handScore;
+
+        if (numberOfAces > 0) {
+            int handScoreWithBigAce = handScore + 10;
+
+            if (handScoreWithBigAce < MIN_BUST_VALUE) {
+                score = handScoreWithBigAce;
+
+            }
+        }
+
+        return score;
+    }
+
+    /**
      * @param dealerHand the object to be compared.
      * @return 1 if the player's hand wins, -1 if the player's hand loses, 0 if the hands tie
      * This function assumes that both hands are eligible hands for scoring (not busted)
@@ -60,38 +80,6 @@ public class Hand implements Comparable<Hand> {
         }
     }
 
-    public List<Card> getCardsInHand() {
-
-        return cardsInHand;
-
-    }
-
-    /**
-     * @return Hand score based on total score of cards in hand, adjusts for highest score that won't bust if hand has one or more Aces
-     */
-    public int getHandScore() {
-
-        int numberOfAces = getNumberOfAces();
-        int score = handScore;
-
-        if (numberOfAces > 0) {
-            int handScoreWithBigAce = handScore + 10;
-
-            if (handScoreWithBigAce < MIN_BUST_VALUE) {
-                score = handScoreWithBigAce;
-
-            }
-        }
-
-        return score;
-    }
-
-    public int getHandSize() {
-
-        return cardsInHand.size();
-
-    }
-
     /**
      * Uses faceCardName to find number of Aces
      *
@@ -101,6 +89,19 @@ public class Hand implements Comparable<Hand> {
     public int getNumberOfAces() {
 
         return (int) cardsInHand.stream().filter(c -> c.getFaceCardName().equals("Ace")).count();
+
+    }
+
+
+    public int getHandSize() {
+
+        return cardsInHand.size();
+
+    }
+
+    public List<Card> getCardsInHand() {
+
+        return cardsInHand;
 
     }
 
