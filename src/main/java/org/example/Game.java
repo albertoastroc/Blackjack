@@ -230,33 +230,33 @@ public class Game {
 
             } else {
 
-            int playerBalance = currentPerson.getBalance();
+                int playerBalance = currentPerson.getBalance();
 
-            while (true) {
+                while (true) {
 
-                try {
+                    try {
 
-                    int betAmount = 0;
+                        int betAmount = 0;
 
-                    while (betAmount < 200) {
+                        while (betAmount < 200) {
 
-                        System.out.println(currentPerson.getName() + " you have " + currentPerson.getBalance()
-                                + " chips how many chips will you bet? (200 minimum)");
-                        betAmount = Integer.parseInt(scanner.nextLine());
+                            System.out.println(currentPerson.getName() + " you have " + currentPerson.getBalance()
+                                    + " chips how many chips will you bet? (200 minimum)");
+                            betAmount = Integer.parseInt(scanner.nextLine());
+                        }
+
+                        if (betAmount <= playerBalance) {
+                            betsMap.put(currentPerson.getName(), betAmount);
+                            System.out.println("Bet is placed");
+                        }
+
+                        break;
+
+                    } catch (NumberFormatException numberFormatException) {
+                        System.out.println("Invalid amount");
+
                     }
-
-                    if (betAmount <= playerBalance) {
-                        betsMap.put(currentPerson.getName(), betAmount);
-                        System.out.println("Bet is placed");
-                    }
-
-                    break;
-
-                } catch (NumberFormatException numberFormatException) {
-                    System.out.println("Invalid amount");
-
                 }
-            }
             }
         }
     }

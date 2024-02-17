@@ -16,7 +16,6 @@ public class OpenAIBot extends Player {
     public OpenAIBot(OpenAiService openAIDao) {
 
 
-
         this.setName("Bot " + random.nextInt(100));
         this.openAIDao = openAIDao;
     }

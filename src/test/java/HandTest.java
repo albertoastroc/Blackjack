@@ -10,14 +10,6 @@ public class HandTest {
     private Hand playerHand;
     private Hand dealerHand;
 
-    @Before
-    public void setup() {
-
-        playerHand = new Hand();
-        dealerHand = new Hand();
-
-    }
-
     @Test
     public void dealer_beats_player_with_blackjack_player_twenty_one() {
 
@@ -95,16 +87,15 @@ public class HandTest {
     }
 
     @Test
-    public void player_beats_dealer_with_blackjack_dealer_twenty_one() {
+    public void player_and_dealer_tie_with_both_having_natural_twenty_one() {
 
-        int expected = 1;
+        int expected = 0;
 
         playerHand.addCardToHand(new Card("Ace", 1, "Diamonds"));
         playerHand.addCardToHand(new Card("Queen", 10, "Clubs"));
 
-        dealerHand.addCardToHand(new Card("7", 7, "Clubs"));
-        dealerHand.addCardToHand(new Card("9", 9, "Hearts"));
-        dealerHand.addCardToHand(new Card("5", 5, "Diamonds"));
+        dealerHand.addCardToHand(new Card("Ace", 1, "Diamonds"));
+        dealerHand.addCardToHand(new Card("Queen", 10, "Clubs"));
 
         int actual = playerHand.compareTo(dealerHand);
 
@@ -132,19 +123,28 @@ public class HandTest {
     }
 
     @Test
-    public void player_and_dealer_tie_with_both_having_natural_twenty_one() {
+    public void player_beats_dealer_with_blackjack_dealer_twenty_one() {
 
-        int expected = 0;
+        int expected = 1;
 
         playerHand.addCardToHand(new Card("Ace", 1, "Diamonds"));
         playerHand.addCardToHand(new Card("Queen", 10, "Clubs"));
 
-        dealerHand.addCardToHand(new Card("Ace", 1, "Diamonds"));
-        dealerHand.addCardToHand(new Card("Queen", 10, "Clubs"));
+        dealerHand.addCardToHand(new Card("7", 7, "Clubs"));
+        dealerHand.addCardToHand(new Card("9", 9, "Hearts"));
+        dealerHand.addCardToHand(new Card("5", 5, "Diamonds"));
 
         int actual = playerHand.compareTo(dealerHand);
 
         assertEquals(expected, actual);
+
+    }
+
+    @Before
+    public void setup() {
+
+        playerHand = new Hand();
+        dealerHand = new Hand();
 
     }
 }

@@ -13,10 +13,12 @@ public class Hand implements Comparable<Hand> {
     private final List<Card> cardsInHand = new ArrayList<>();
     private int handScore;
 
-    public Hand() {}
+    public Hand() {
+    }
 
     /**
      * Adds a card and it's score to the hand
+     *
      * @param card card being added
      */
     public void addCardToHand(Card card) {
@@ -27,7 +29,6 @@ public class Hand implements Comparable<Hand> {
     }
 
     /**
-     *
      * @param dealerHand the object to be compared.
      * @return 1 if the player's hand wins, -1 if the player's hand loses, 0 if the hands tie
      * This function assumes that both hands are eligible hands for scoring (not busted)
@@ -46,17 +47,23 @@ public class Hand implements Comparable<Hand> {
 
         if (playerNaturalBlackjack && !dealerNaturalBlackjack) {
             return 1;
-        } else if (!playerNaturalBlackjack && dealerNaturalBlackjack){
+        } else if (!playerNaturalBlackjack && dealerNaturalBlackjack) {
             return -1;
         } else {
             if (playerScore > dealerScore) {
                 return 1;
             } else if (playerScore < dealerScore) {
-                return- 1;
-            } else{
+                return -1;
+            } else {
                 return 0;
             }
         }
+    }
+
+    public List<Card> getCardsInHand() {
+
+        return cardsInHand;
+
     }
 
     /**
@@ -79,6 +86,12 @@ public class Hand implements Comparable<Hand> {
         return score;
     }
 
+    public int getHandSize() {
+
+        return cardsInHand.size();
+
+    }
+
     /**
      * Uses faceCardName to find number of Aces
      *
@@ -88,18 +101,6 @@ public class Hand implements Comparable<Hand> {
     public int getNumberOfAces() {
 
         return (int) cardsInHand.stream().filter(c -> c.getFaceCardName().equals("Ace")).count();
-
-    }
-
-    public int getHandSize() {
-
-        return cardsInHand.size();
-
-    }
-
-    public List<Card> getCardsInHand() {
-
-        return cardsInHand;
 
     }
 
