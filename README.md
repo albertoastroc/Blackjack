@@ -1,5 +1,7 @@
 # Blackjack by Alberto Castro
 
+## Project needs OpeaAI api key to make use of bots, uses GPT-3.5 Turbo, bots can be toggled off in main menu.
+
 ## Brainstorming
 
 - Identify what could be a class
