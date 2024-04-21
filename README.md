@@ -1,6 +1,6 @@
 # Blackjack by Alberto Castro
 
-## Project needs OpeaAI api key to make use of bots, uses GPT-3.5 Turbo, bots can be toggled off in main menu.
+## Project needs OpeaAI api key set as an environment variable to make use of bots, uses GPT-3.5 Turbo, bots can be toggled off in main menu. 
 
 ## Brainstorming
 
